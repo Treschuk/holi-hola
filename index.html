@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HOLI HOLA Rheine</title>
+<meta name="description" content="HOLI HOLA – authentische türkische Küche im Herzen von Rheine. Kebab vom Holzkohlegrill, frische Meze und hausgemachte Desserts. Täglich bis 22:30 Uhr, Bültstiege 7.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#f3f2f7', ink: '#1e1d33', primary: '#2f2c5a', primary2: '#3d3a72',
+          accent: '#8e8ac2', card: '#e4e2ef', muted: '#605f70', line: '#d9d8df'
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+          serif: ['Lora', 'Georgia', 'Times New Roman', 'serif']
+        },
+        borderRadius: { xl2: '1.75rem' },
+        maxWidth: { site: '1104px' }
+      }
+    }
+  };
+</script>
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* Layout: luftiges Lavendel-Glas, ein großer Display-Satz pro Abschnitt, Bilder in Glasrahmen */
+  :root {
+    --bg: #f3f2f7; --ink: #1e1d33; --primary: #2f2c5a; --accent: #8e8ac2;
+    --card: #e4e2ef; --muted: #605f70; --line: #d9d8df;
+    color-scheme: light;
+  }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+  section[id] { scroll-margin-top: 96px; }
+  .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+  /* Atmosphäre im Hintergrund */
+  .aura { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: var(--bg); }
+  /* bewusst ohne filter: blur – große geblurrte Flächen können die GPU überlasten */
+  .aura span { position: absolute; border-radius: 9999px; }
+  .aura .a1 { width: 70vw; height: 70vw; left: -30vw; top: 0; background: radial-gradient(closest-side, rgba(201,198,227,.75), rgba(201,198,227,0)); }
+  .aura .a2 { width: 60vw; height: 60vw; right: -22vw; top: -20vh; background: radial-gradient(closest-side, rgba(220,218,238,.8), rgba(220,218,238,0)); }
+  .aura .a3 { width: 64vw; height: 64vw; right: 0; bottom: -30vh; background: radial-gradient(closest-side, rgba(207,204,230,.7), rgba(207,204,230,0)); }
+
+  /* Glas & Rahmen */
+  .glass { background: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.75); }
+  .frame { padding: 7px; border-radius: 1.75rem; background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 20px 50px -24px rgba(47,44,90,.35); }
+  .frame > .inner { border-radius: 1.4rem; overflow: hidden; position: relative; }
+  .pill-label { font-family: Lora, Georgia, serif; }
+  .eyebrow { display: inline-flex; align-items: center; padding: .35rem .85rem; border-radius: 9999px; background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.85); font-size: .875rem; color: var(--ink); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 9999px; font-family: Lora, Georgia, serif; font-size: 1rem; padding: .85rem 1.6rem; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--primary); color: #f3f2f7; box-shadow: 0 14px 30px -12px rgba(47,44,90,.65); }
+  .btn-primary:hover { background: #3d3a72; box-shadow: 0 18px 36px -12px rgba(47,44,90,.7); }
+  .btn-secondary { background: #fff; color: var(--ink); box-shadow: 0 10px 26px -14px rgba(47,44,90,.35); }
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+  /* Hero */
+  .display { font-size: clamp(3.2rem, 1rem + 10.5vw, 10.5rem); line-height: .95; font-weight: 700; letter-spacing: -0.045em; }
+  .float-a { animation: floatA 7s ease-in-out infinite; }
+  .float-b { animation: floatB 8s ease-in-out infinite; }
+  @keyframes floatA { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-10px) rotate(-2deg); } }
+  @keyframes floatB { 0%,100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(12px) rotate(3deg); } }
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  .rise-2 { animation-delay: .12s; } .rise-3 { animation-delay: .24s; } .rise-4 { animation-delay: .36s; }
+  @keyframes rise { from { transform: translateY(24px); opacity: .001; } to { transform: none; opacity: 1; } }
+
+  /* Galerie */
+  .rail { scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * { scroll-snap-align: start; }
+
+  /* Karten-Hover */
+  .dish img, .shot img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .dish:hover img, .shot:hover img { transform: scale(1.06); }
+
+  /* FAQ */
+  .acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  .acc-item.open .acc-body { grid-template-rows: 1fr; }
+  .acc-item.open .acc-icon { transform: rotate(45deg); }
+  .acc-icon { transition: transform .3s ease; }
+
+  /* Modals */
+  .modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(30,29,51,.55); opacity: 0; transition: opacity .25s ease; }
+  .modal.show { opacity: 1; }
+  .modal .sheet { transform: translateY(16px) scale(.98); transition: transform .3s cubic-bezier(.2,.7,.2,1); max-height: calc(100vh - 32px); overflow-y: auto; }
+  .modal.show .sheet { transform: none; }
+  .legal h4 { font-weight: 600; margin-top: 1.25rem; margin-bottom: .35rem; color: var(--ink); }
+  .legal p, .legal li { color: var(--muted); line-height: 1.65; font-size: .95rem; }
+  .legal ul { list-style: disc; padding-left: 1.2rem; }
+
+  .field { width: 100%; border-radius: 1rem; border: 1px solid var(--line); background: #fff; padding: .8rem 1rem; color: var(--ink); font-size: 1rem; transition: border-color .2s, box-shadow .2s; }
+  .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(142,138,194,.25); }
+  .field.invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220,38,38,.12); }
+  .err { color: #b91c1c; font-size: .82rem; margin-top: .3rem; min-height: 1em; }
+
+  .chip { border-radius: 9999px; border: 1px solid var(--line); background: #fff; padding: .6rem 1.1rem; font-size: .95rem; color: var(--ink); transition: background-color .2s, color .2s, border-color .2s; min-width: 3rem; text-align: center; }
+  .chip:hover { border-color: var(--accent); }
+  .chip.active, .chip[aria-checked="true"] { background: var(--primary); border-color: var(--primary); color: #f3f2f7; }
+  .chip.invalid { border-color: #dc2626; }
+  .choice { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .25s ease; }
+  .choice:hover { transform: translateY(-3px); box-shadow: 0 22px 44px -24px rgba(47,44,90,.45); border-color: var(--accent); }
+
+  .switch { position: relative; width: 46px; height: 26px; flex: none; }
+  .switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+  .switch span { position: absolute; inset: 0; border-radius: 9999px; background: var(--line); transition: background .2s; }
+  .switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 9999px; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .switch input:checked + span { background: var(--primary); }
+  .switch input:checked + span::after { transform: translateX(20px); }
+  .switch input:disabled + span { opacity: .6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aura" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="fixed top-0 inset-x-0 z-[1000] gutter" style="padding-top: max(14px, env(safe-area-inset-top, 0px));">
+  <div class="mx-auto max-w-site flex items-center justify-between gap-4 py-2">
+    <a href="#hero" class="font-medium tracking-wide text-[1.05rem] text-ink px-3 py-2 rounded-full hover:bg-white/50 transition" aria-label="HOLI HOLA – zur Startseite">HOLI HOLA</a>
+    <div class="flex items-center gap-2 relative">
+      <a href="https://www.instagram.com/holi_hola_rheine/" target="_blank" rel="noopener" class="w-11 h-11 rounded-full bg-primary text-bg flex items-center justify-center shadow-lg shadow-primary/40 hover:bg-primary2 hover:-translate-y-0.5 transition" aria-label="HOLI HOLA auf Instagram (öffnet in neuem Tab)" title="HOLI HOLA auf Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+      <button id="menuBtn" class="w-11 h-11 rounded-full glass flex items-center justify-center text-ink hover:bg-white transition" aria-expanded="false" aria-controls="menuPanel" aria-label="Menü öffnen">
+        <i data-lucide="menu" class="w-5 h-5" id="menuIcon"></i>
+      </button>
+      <nav id="menuPanel" hidden class="absolute right-0 top-14 w-64 glass rounded-[1.5rem] p-3 shadow-2xl shadow-primary/20" aria-label="Hauptnavigation">
+        <ul class="flex flex-col">
+          <li><a href="#gallery" class="nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/80 transition">Über uns <i data-lucide="arrow-up-right" class="w-4 h-4 text-muted"></i></a></li>
+          <li><a href="#menu" class="nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/80 transition">Speisekarte <i data-lucide="arrow-up-right" class="w-4 h-4 text-muted"></i></a></li>
+          <li><a href="#faq" class="nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/80 transition">Häufige Fragen <i data-lucide="arrow-up-right" class="w-4 h-4 text-muted"></i></a></li>
+          <li><a href="#contact" class="nav-link flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/80 transition">Kontakt <i data-lucide="arrow-up-right" class="w-4 h-4 text-muted"></i></a></li>
+        </ul>
+        <button type="button" data-open="bookingModal" class="btn btn-primary w-full mt-2 !py-3">Tisch reservieren</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="gutter pt-28 sm:pt-32 pb-16">
+  <div class="mx-auto max-w-site relative">
+    <!-- schwebende Chips -->
+    <div class="float-a absolute -top-2 right-2 sm:right-[18%] md:right-[26%] z-10 glass rounded-2xl p-1.5 pr-4 flex items-center gap-2.5 shadow-lg shadow-primary/10">
+      <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=160&h=160&fit=crop&q=70" alt="Adana Kebab vom Holzkohlegrill" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover">
+      <span class="text-sm font-medium">Adana Kebab</span>
+    </div>
+    <div class="float-b absolute top-[38%] sm:top-[30%] -right-1 sm:right-0 z-10 glass rounded-2xl p-1.5 pr-4 flex items-center gap-2.5 shadow-lg shadow-primary/10">
+      <img src="https://images.unsplash.com/photo-1598110750624-207050c4f28c?w=160&h=160&fit=crop&q=70" alt="Hausgemachte Baklava mit Pistazien" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover">
+      <span class="text-sm font-medium">Baklava</span>
+    </div>
+
+    <h1 class="display rise pt-12 sm:pt-10">Geschmack<br>der Türkei</h1>
+
+    <div class="mt-8 md:mt-6 flex flex-col md:items-end">
+      <p class="rise rise-2 md:text-right text-[1.05rem] sm:text-lg leading-relaxed max-w-md text-ink/85">
+        Saftige Kebabs vom Holzkohlegrill, frische Meze und traditionelle Desserts im Herzen von Rheine. Wir freuen uns täglich bis 22:30 Uhr auf Ihren Besuch in der Bültstiege 7.
+      </p>
+      <div class="rise rise-3 mt-7 flex flex-wrap gap-3 md:justify-end">
+        <a href="#menu" class="btn btn-primary">Speisekarte ansehen</a>
+        <button type="button" data-open="bookingModal" class="btn btn-secondary"><i data-lucide="calendar-days" class="w-4 h-4"></i>Tisch reservieren</button>
+        <a href="#contact" class="btn btn-secondary">So finden Sie uns</a>
+      </div>
+    </div>
+
+    <div class="rise rise-4 relative mt-12">
+      <div class="frame">
+        <div class="inner aspect-[4/3] sm:aspect-[16/8]">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1800&q=80" alt="Reich gedeckter Tisch mit türkischen Spezialitäten" class="w-full h-full object-cover">
+        </div>
+      </div>
+      <div class="frame absolute -bottom-8 left-3 sm:left-6 w-[38%] sm:w-[24%] !p-1.5 !rounded-[1.4rem]">
+        <div class="inner aspect-[4/5] !rounded-[1.1rem]">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80" alt="Grillspieße mit Gemüse" class="w-full h-full object-cover">
+        </div>
+      </div>
+      <div class="hidden sm:flex absolute bottom-6 right-6 glass rounded-full px-5 py-3 items-center gap-3 text-sm">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+        Täglich geöffnet bis 22:30 Uhr
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERIE / ÜBER UNS ============ -->
+<section id="gallery" class="pt-20 pb-16">
+  <div class="gutter">
+    <div class="mx-auto max-w-site text-center flex flex-col items-center">
+      <span class="eyebrow">Tradition des Geschmacks</span>
+      <h2 class="mt-5 font-bold text-[clamp(2.1rem,1.3rem+3.6vw,4.5rem)] leading-[1.05] max-w-3xl">Echte türkische Küche im Herzen von Rheine</h2>
+      <p class="mt-5 max-w-xl text-muted text-[1.05rem] leading-relaxed">Bei uns wird nach Familienrezepten gekocht: Fleisch vom Holzkohlegrill, Brot frisch aus dem Ofen und zum Abschluss ein Glas Çay – wie in Istanbul, nur ein paar Schritte vom Rheiner Marktplatz entfernt.</p>
+    </div>
+  </div>
+
+  <div class="relative mt-12">
+    <div id="rail" class="rail flex gap-5 overflow-x-auto pb-10 pt-4 gutter" tabindex="0" aria-label="Bildergalerie"></div>
+    <div class="gutter">
+      <div class="mx-auto max-w-site flex justify-center gap-3">
+        <button id="railPrev" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white transition" aria-label="Vorherige Bilder"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+        <button id="railNext" class="w-12 h-12 rounded-full bg-primary text-bg flex items-center justify-center hover:bg-primary2 transition shadow-lg shadow-primary/30" aria-label="Nächste Bilder"><i data-lucide="arrow-right" class="w-5 h-5"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPEISEKARTE ============ -->
+<section id="menu" class="gutter py-20">
+  <div class="mx-auto max-w-site">
+    <div class="text-center flex flex-col items-center">
+      <span class="eyebrow">Unsere Speisekarte</span>
+      <h2 class="mt-5 font-bold text-[clamp(2.1rem,1.3rem+3.6vw,4.5rem)] leading-[1.05] max-w-3xl">Von saftigem Kebab bis zu hausgemachten Desserts</h2>
+      <p class="mt-5 max-w-lg text-ink/80 text-[1.05rem] leading-relaxed">Durchschnittlich 10–20 € pro Person. Genießen Sie Ihr Essen bei uns im Restaurant oder nehmen Sie es bequem mit nach Hause.</p>
+    </div>
+
+    <div class="mt-10 -mx-4 px-4 overflow-x-auto rail">
+      <div id="tabs" role="tablist" aria-label="Kategorien der Speisekarte" class="flex gap-3 justify-start md:justify-center w-max md:w-auto mx-auto"></div>
+    </div>
+
+    <div id="dishGrid" class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5" role="tabpanel" aria-live="polite"></div>
+
+    <p class="mt-8 text-center text-sm text-muted">Alle Preise in Euro inkl. gesetzl. MwSt. Informationen zu Allergenen und Zusatzstoffen erhalten Sie gern bei unserem Personal.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="gutter py-20">
+  <div class="mx-auto max-w-site grid lg:grid-cols-[0.85fr_1fr] gap-10 lg:gap-14 items-start">
+    <div class="min-w-0">
+      <span class="eyebrow">Vor Ihrem Besuch</span>
+      <h2 class="mt-5 font-bold text-[clamp(2.1rem,1.3rem+3.6vw,4.5rem)] leading-[1.05]">Alles, was Sie wissen sollten</h2>
+      <p class="mt-5 max-w-sm text-ink/80 text-[1.05rem] leading-relaxed">Hier beantworten wir die häufigsten Fragen zur Speisekarte, zu Bestellungen zum Mitnehmen und zu Ihrem Besuch bei uns.</p>
+      <div class="frame mt-8 max-w-sm hidden sm:block">
+        <div class="inner aspect-[4/5]">
+          <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=900&q=80" alt="Türkischer Tee in traditioneller Kanne" class="w-full h-full object-cover">
+          <span class="pill-label absolute bottom-3 left-3 right-3 glass rounded-full py-2.5 text-center text-lg">Türkischer Tee</span>
+        </div>
+      </div>
+    </div>
+    <div id="faqList" class="flex flex-col gap-3 min-w-0"></div>
+  </div>
+</section>
+
+<!-- ============ ONLINE-RESERVIERUNG ============ -->
+<section id="reservierung" class="gutter py-16">
+  <div class="mx-auto max-w-site grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-14 items-start">
+    <div class="min-w-0">
+      <span class="eyebrow">Online-Reservierung</span>
+      <h2 class="mt-5 font-bold text-[clamp(2.1rem,1.3rem+3.6vw,4.5rem)] leading-[1.05]">Reservieren Sie Ihren Tisch</h2>
+      <p class="mt-5 max-w-sm text-ink/80 text-[1.05rem] leading-relaxed">In 30 Sekunden erledigt: Name, Kontakt, Tag, Uhrzeit und Personenzahl – wir melden uns kurz darauf zur Bestätigung.</p>
+      <ul class="mt-7 flex flex-col gap-3 text-[.98rem]">
+        <li class="flex items-center gap-3"><span class="w-9 h-9 rounded-full bg-white flex items-center justify-center"><i data-lucide="clock" class="w-4 h-4"></i></span>Täglich bis 22:30 Uhr geöffnet</li>
+        <li class="flex items-center gap-3"><span class="w-9 h-9 rounded-full bg-white flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></span>Gruppen ab 6 Personen bitte vorab reservieren</li>
+        <li class="flex items-center gap-3"><span class="w-9 h-9 rounded-full bg-white flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4"></i></span>Lieber telefonisch? <a href="tel:+4959719605821" class="font-medium underline underline-offset-4 tabular-nums">05971 9605821</a></li>
+      </ul>
+    </div>
+
+    <form id="reserveForm" class="min-w-0 rounded-[2rem] bg-white/80 border border-white p-6 sm:p-9 shadow-xl shadow-primary/10 flex flex-col gap-1" novalidate>
+      <!-- Spam-Schutz: für Menschen unsichtbar -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+
+      <div class="grid sm:grid-cols-2 gap-x-4 gap-y-1">
+        <div>
+          <label for="rName" class="text-sm font-medium">Ihr Name</label>
+          <input id="rName" name="name" type="text" class="field mt-1" placeholder="Anna Schmidt" autocomplete="name">
+          <p class="err" data-err="name"></p>
+        </div>
+        <div>
+          <label for="rContact" class="text-sm font-medium">Telefon oder E-Mail</label>
+          <input id="rContact" name="contact" type="text" class="field mt-1" placeholder="0171 2345678" autocomplete="tel">
+          <p class="err" data-err="contact"></p>
+        </div>
+      </div>
+
+      <div>
+        <span class="text-sm font-medium" id="dateLbl">Wann?</span>
+        <div class="mt-1 grid grid-cols-[auto_auto_1fr] gap-2" role="group" aria-labelledby="dateLbl">
+          <button type="button" class="quick-date chip" data-offset="0">Heute</button>
+          <button type="button" class="quick-date chip" data-offset="1">Morgen</button>
+          <input id="rDate" name="date" type="date" class="field !py-2.5 min-w-0" aria-label="Datum wählen">
+        </div>
+        <p class="err" data-err="date"></p>
+      </div>
+
+      <div>
+        <label for="rTime" class="text-sm font-medium">Uhrzeit</label>
+        <select id="rTime" name="time" class="field mt-1"></select>
+        <p class="err" data-err="time"></p>
+      </div>
+
+      <div>
+        <span class="text-sm font-medium" id="guestLbl">Wie viele Personen?</span>
+        <div id="guestChips" class="mt-1 flex flex-wrap gap-2" role="radiogroup" aria-labelledby="guestLbl"></div>
+        <p class="err" data-err="guests"></p>
+      </div>
+
+      <div>
+        <label for="rMsg" class="text-sm font-medium">Besondere Wünsche <span class="text-muted font-normal">(optional)</span></label>
+        <input id="rMsg" name="msg" type="text" class="field mt-1" placeholder="z. B. Kinderstuhl oder Geburtstag">
+      </div>
+
+      <button type="submit" id="reserveSubmit" class="btn btn-primary w-full mt-4 !py-4 text-[1.05rem]">Tisch anfragen <i data-lucide="send" class="w-4 h-4"></i></button>
+      <p class="mt-3 text-xs text-muted text-center leading-relaxed">Mit dem Absenden werden Ihre Angaben zur Bearbeitung der Reservierung verwendet. Mehr in der <button type="button" data-open="datenschutzModal" class="underline">Datenschutzerklärung</button>.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section id="contact" class="gutter py-16">
+  <div class="mx-auto max-w-site">
+    <div class="rounded-[2rem] bg-card/70 border border-white/70 p-7 sm:p-12 grid lg:grid-cols-[1.1fr_1fr] gap-10 items-center">
+      <div class="min-w-0">
+        <span class="eyebrow">Wir freuen uns auf Sie</span>
+        <h2 class="mt-5 font-bold text-[clamp(2.1rem,1.3rem+3.6vw,4.5rem)] leading-[1.05]">Sprechen Sie uns bei allen Fragen an</h2>
+        <p class="mt-5 text-ink/80 leading-relaxed max-w-md">Bültstiege 7, 48429 Rheine · täglich bis 22:30 Uhr. Für Gruppen ab 6 Personen empfehlen wir eine Reservierung.</p>
+        <button type="button" data-open="bookingModal" class="btn btn-primary mt-7"><i data-lucide="calendar-days" class="w-4 h-4"></i>Tisch reservieren</button>
+      </div>
+      <div class="grid grid-cols-3 gap-3 sm:gap-6 justify-items-center">
+        <a href="tel:+4959719605821" class="group flex flex-col items-center gap-3 text-center">
+          <span class="w-[clamp(4.25rem,12vw,6rem)] aspect-square rounded-full bg-primary text-bg flex items-center justify-center shadow-xl shadow-primary/30 group-hover:-translate-y-1 group-hover:bg-primary2 transition"><i data-lucide="phone" class="w-7 h-7"></i></span>
+          <span class="text-muted">Telefon</span>
+          <span class="text-xs sm:text-sm font-medium select-all">05971 9605821</span>
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&query=B%C3%BCltstiege%207%2C%2048429%20Rheine" target="_blank" rel="noopener" class="group flex flex-col items-center gap-3 text-center">
+          <span class="w-[clamp(4.25rem,12vw,6rem)] aspect-square rounded-full bg-primary text-bg flex items-center justify-center shadow-xl shadow-primary/30 group-hover:-translate-y-1 group-hover:bg-primary2 transition"><i data-lucide="navigation" class="w-7 h-7"></i></span>
+          <span class="text-muted">Route</span>
+          <span class="text-xs sm:text-sm font-medium">Bültstiege 7</span>
+        </a>
+        <a href="mailto:info@restaurant-rheine.de" class="group flex flex-col items-center gap-3 text-center min-w-0">
+          <span class="w-[clamp(4.25rem,12vw,6rem)] aspect-square rounded-full bg-primary text-bg flex items-center justify-center shadow-xl shadow-primary/30 group-hover:-translate-y-1 group-hover:bg-primary2 transition"><i data-lucide="mail" class="w-7 h-7"></i></span>
+          <span class="text-muted">E-Mail</span>
+          <span class="text-xs sm:text-sm font-medium break-all select-all">info@restaurant-rheine.de</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="mt-20 rounded-t-[2rem] bg-primary text-bg gutter pt-16 pb-8" style="padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px));">
+  <div class="mx-auto max-w-site">
+    <p class="font-bold leading-[1] tracking-[-0.04em] text-[clamp(2.4rem,1rem+6vw,5.75rem)]">Restaurant für türkische Küche</p>
+    <div class="mt-14 grid sm:grid-cols-3 gap-8 text-[.98rem]">
+      <ul class="flex flex-col gap-3">
+        <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Bültstiege 7, 48429 Rheine</li>
+        <li><a href="#hero" class="flex items-center gap-2 hover:opacity-70 transition"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Startseite</a></li>
+        <li><a href="#gallery" class="flex items-center gap-2 hover:opacity-70 transition"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Über uns</a></li>
+      </ul>
+      <ul class="flex flex-col gap-3">
+        <li><a href="tel:+4959719605821" class="flex items-center gap-2 hover:opacity-70 transition"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>05971 9605821</a></li>
+        <li><a href="#menu" class="flex items-center gap-2 hover:opacity-70 transition"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Traditionelle Speisekarte</a></li>
+        <li><a href="#faq" class="flex items-center gap-2 hover:opacity-70 transition"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Häufige Fragen</a></li>
+      </ul>
+      <ul class="flex flex-col gap-3">
+        <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Täglich bis 22:30 Uhr</li>
+        <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70"></i>Vor Ort essen &amp; zum Mitnehmen</li>
+        <li><a href="mailto:info@restaurant-rheine.de" class="flex items-center gap-2 hover:opacity-70 transition break-all"><i data-lucide="chevron-right" class="w-4 h-4 opacity-70 flex-none"></i>info@restaurant-rheine.de</a></li>
+      </ul>
+    </div>
+    <div class="mt-14 pt-6 border-t border-white/15 flex flex-col md:flex-row gap-4 md:items-center md:justify-between text-sm text-bg/70">
+      <p>© <span id="year">2026</span> HOLI HOLA · Alle Rechte vorbehalten</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        <li><button data-open="impressumModal" class="hover:text-bg transition">Impressum</button></li>
+        <li><button data-open="datenschutzModal" class="hover:text-bg transition">Datenschutz</button></li>
+        <li><button data-open="agbModal" class="hover:text-bg transition">AGB</button></li>
+        <li><button data-open="cookieModal" class="hover:text-bg transition">Cookie-Einstellungen</button></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL: GERICHT ============ -->
+<div id="dishModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="dishTitle">
+  <div class="sheet w-full max-w-lg bg-bg rounded-[2rem] overflow-hidden shadow-2xl">
+    <div class="relative aspect-[16/10]">
+      <img id="dishImg" src="" alt="" class="w-full h-full object-cover">
+      <button data-close class="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center" aria-label="Schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-7">
+      <div class="flex items-start justify-between gap-4">
+        <h3 id="dishTitle" class="text-2xl font-bold"></h3>
+        <span id="dishPrice" class="pill-label text-xl whitespace-nowrap"></span>
+      </div>
+      <div id="dishTags" class="mt-3 flex flex-wrap gap-2"></div>
+      <p id="dishDesc" class="mt-4 text-muted leading-relaxed"></p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="tel:+4959719605821" class="btn btn-primary"><i data-lucide="phone" class="w-4 h-4"></i>Zum Mitnehmen bestellen</a>
+        <button data-close class="btn btn-secondary">Zurück zur Karte</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: RESERVIERUNG ============ -->
+<div id="bookingModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="bookingTitle" aria-describedby="bookingSub">
+  <div class="sheet w-full max-w-2xl bg-bg rounded-[2rem] p-6 sm:p-9 shadow-2xl">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <span class="eyebrow">Reservierung</span>
+        <h3 id="bookingTitle" class="mt-3 text-2xl sm:text-3xl font-bold">Wie möchten Sie reservieren?</h3>
+        <p id="bookingSub" class="mt-2 text-muted">Wählen Sie Ihre bevorzugte Option für Ihre Tischreservierung.</p>
+      </div>
+      <button type="button" data-close class="w-10 h-10 flex-none rounded-full bg-white flex items-center justify-center hover:bg-card transition" aria-label="Fenster schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+
+    <div class="mt-7 grid sm:grid-cols-2 gap-4">
+      <!-- Option A: Online-Formular -->
+      <button type="button" id="chooseOnline" class="choice text-left rounded-[1.5rem] bg-white border border-line p-6 flex flex-col gap-4">
+        <span class="w-14 h-14 rounded-full bg-primary text-bg flex items-center justify-center shadow-lg shadow-primary/30"><i data-lucide="calendar-check" class="w-6 h-6"></i></span>
+        <span>
+          <span class="block text-lg font-semibold">Online per Formular / E-Mail</span>
+          <span class="block mt-1 text-muted text-sm leading-relaxed">Direkt hier auf der Website einen Tisch anfragen</span>
+        </span>
+        <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-primary">Zum Formular <i data-lucide="arrow-down" class="w-4 h-4"></i></span>
+      </button>
+
+      <!-- Option B: Telefon -->
+      <div class="choice rounded-[1.5rem] bg-white border border-line p-6 flex flex-col gap-4">
+        <a href="tel:+4959719605821" class="flex flex-col gap-4 group" aria-label="Telefonisch reservieren unter +49 5971 9605821">
+          <span class="w-14 h-14 rounded-full bg-primary text-bg flex items-center justify-center shadow-lg shadow-primary/30 group-hover:bg-primary2 transition"><i data-lucide="phone" class="w-6 h-6"></i></span>
+          <span>
+            <span class="block text-lg font-semibold">Telefonisch reservieren</span>
+            <span class="block mt-1 text-muted text-sm">Täglich bis 22:30 Uhr erreichbar</span>
+          </span>
+          <span class="block text-[1.45rem] sm:text-[1.6rem] font-bold tracking-tight tabular-nums text-ink group-hover:text-primary transition">+49 5971 9605821</span>
+        </a>
+        <div class="mt-auto flex flex-wrap items-center gap-2">
+          <a href="tel:+4959719605821" class="btn btn-primary !py-2.5 !px-4 text-sm"><i data-lucide="phone-call" class="w-4 h-4"></i>Jetzt anrufen</a>
+          <button type="button" id="copyPhone" class="btn btn-secondary !py-2.5 !px-4 text-sm border border-line" aria-label="Telefonnummer kopieren"><i data-lucide="copy" class="w-4 h-4"></i>Kopieren</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: IMPRESSUM ============ -->
+<div id="impressumModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="impTitle">
+  <div class="sheet legal w-full max-w-2xl bg-bg rounded-[2rem] p-6 sm:p-9 shadow-2xl">
+    <div class="flex items-start justify-between gap-4">
+      <h3 id="impTitle" class="text-2xl sm:text-3xl font-bold">Impressum</h3>
+      <button data-close class="w-10 h-10 flex-none rounded-full bg-white flex items-center justify-center" aria-label="Schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <h4>Angaben gemäß § 5 DDG</h4>
+    <p>HOLI HOLA – Restaurant für türkische Küche<br>Inhaber: [Vor- und Nachname des Inhabers]<br>Bültstiege 7<br>48429 Rheine</p>
+    <h4>Kontakt</h4>
+    <p>Telefon: 05971 9605821<br>E-Mail: info@restaurant-rheine.de</p>
+    <h4>Umsatzsteuer-ID</h4>
+    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [DE000000000]</p>
+    <h4>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
+    <p>[Vor- und Nachname], Anschrift wie oben</p>
+    <h4>EU-Streitschlichtung</h4>
+    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/. Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+    <h4>Verbraucherstreitbeilegung</h4>
+    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    <h4>Bildnachweise</h4>
+    <p>Fotos: Unsplash (unsplash.com), Nutzung gemäß Unsplash-Lizenz.</p>
+  </div>
+</div>
+
+<!-- ============ MODAL: DATENSCHUTZ ============ -->
+<div id="datenschutzModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="dsTitle">
+  <div class="sheet legal w-full max-w-2xl bg-bg rounded-[2rem] p-6 sm:p-9 shadow-2xl">
+    <div class="flex items-start justify-between gap-4">
+      <h3 id="dsTitle" class="text-2xl sm:text-3xl font-bold">Datenschutzerklärung</h3>
+      <button data-close class="w-10 h-10 flex-none rounded-full bg-white flex items-center justify-center" aria-label="Schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <h4>1. Verantwortlicher</h4>
+    <p>Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist: HOLI HOLA, [Inhaber], Bültstiege 7, 48429 Rheine, E-Mail: info@restaurant-rheine.de, Telefon: 05971 9605821.</p>
+    <h4>2. Allgemeines zur Datenverarbeitung</h4>
+    <p>Wir verarbeiten personenbezogene Daten unserer Besucherinnen und Besucher nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist.</p>
+    <h4>3. Server-Logfiles</h4>
+    <p>Beim Aufruf unserer Website erhebt unser Hosting-Anbieter automatisch Informationen wie IP-Adresse, Datum und Uhrzeit des Zugriffs, Browsertyp und Betriebssystem. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Die Daten werden nach spätestens 7 Tagen gelöscht.</p>
+    <h4>4. Cookies</h4>
+    <p>Wir setzen technisch notwendige Cookies bzw. lokalen Speicher ein, um Ihre Cookie-Auswahl zu speichern und – zum Schutz vor Missbrauch – die Zeitpunkte Ihrer letzten Reservierungsanfragen für 24 Stunden in Ihrem Browser zu vermerken (§ 25 Abs. 2 TDDDG). Optionale Kategorien werden nur mit Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO aktiviert. Ihre Einwilligung können Sie jederzeit über „Cookie-Einstellungen“ im Footer widerrufen.</p>
+    <h4>5. Reservierungsanfragen</h4>
+    <p>Wenn Sie uns über das Reservierungsformular kontaktieren, verarbeiten wir Ihren Namen, Ihre Telefonnummer oder E-Mail-Adresse, Datum, Uhrzeit, Personenzahl und Ihre Wünsche zur Bearbeitung der Reservierung (Art. 6 Abs. 1 lit. b DSGVO). Die Angaben werden über den Formulardienst FormSubmit (formsubmit.co) per E-Mail an uns übermittelt. Die Daten werden gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind.</p>
+    <h4>6. Externe Inhalte</h4>
+    <ul>
+      <li>Schriftarten werden über Google Fonts (Google Ireland Limited) geladen; dabei wird Ihre IP-Adresse an Google übertragen.</li>
+      <li>Bilder werden von Unsplash (Unsplash Inc., USA) bereitgestellt.</li>
+      <li>Der Link „Route“ führt zu Google Maps; Daten werden erst beim Anklicken übertragen.</li>
+    </ul>
+    <h4>7. Ihre Rechte</h4>
+    <p>Sie haben das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21 DSGVO).</p>
+    <h4>8. Beschwerderecht</h4>
+    <p>Sie können sich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW).</p>
+    <p class="mt-4 text-xs">Stand: 14.11.2026</p>
+  </div>
+</div>
+
+<!-- ============ MODAL: AGB ============ -->
+<div id="agbModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="agbTitle">
+  <div class="sheet legal w-full max-w-2xl bg-bg rounded-[2rem] p-6 sm:p-9 shadow-2xl">
+    <div class="flex items-start justify-between gap-4">
+      <h3 id="agbTitle" class="text-2xl sm:text-3xl font-bold">Allgemeine Geschäftsbedingungen</h3>
+      <button data-close class="w-10 h-10 flex-none rounded-full bg-white flex items-center justify-center" aria-label="Schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <h4>§ 1 Geltungsbereich</h4>
+    <p>Diese AGB gelten für alle Leistungen des Restaurants HOLI HOLA, Bültstiege 7, 48429 Rheine, insbesondere für Tischreservierungen, Bewirtung vor Ort und Speisen zum Mitnehmen.</p>
+    <h4>§ 2 Reservierungen</h4>
+    <p>Eine Reservierung ist erst nach unserer Bestätigung verbindlich. Reservierte Tische halten wir 15 Minuten nach der vereinbarten Uhrzeit für Sie frei.</p>
+    <h4>§ 3 Stornierung</h4>
+    <p>Bitte sagen Sie Reservierungen, die Sie nicht wahrnehmen können, spätestens 24 Stunden vorher telefonisch oder per E-Mail ab. Für Gruppen ab 10 Personen können gesonderte Vereinbarungen getroffen werden.</p>
+    <h4>§ 4 Preise und Zahlung</h4>
+    <p>Alle Preise verstehen sich in Euro inklusive der gesetzlichen Mehrwertsteuer. Die Zahlung erfolgt bar, per Girocard oder Kreditkarte.</p>
+    <h4>§ 5 Allergene</h4>
+    <p>Informationen zu Allergenen und Zusatzstoffen erhalten Sie auf Nachfrage bei unserem Personal. Spuren von Allergenen können trotz größter Sorgfalt nicht ausgeschlossen werden.</p>
+    <h4>§ 6 Schlussbestimmungen</h4>
+    <p>Es gilt das Recht der Bundesrepublik Deutschland. Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
+    <p class="mt-4 text-xs">Stand: 14.11.2026</p>
+  </div>
+</div>
+
+<!-- ============ MODAL: COOKIE-EINSTELLUNGEN ============ -->
+<div id="cookieModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="ckTitle">
+  <div class="sheet w-full max-w-lg bg-bg rounded-[2rem] p-6 sm:p-8 shadow-2xl">
+    <div class="flex items-start justify-between gap-4">
+      <h3 id="ckTitle" class="text-2xl font-bold">Cookie-Einstellungen</h3>
+      <button data-close class="w-10 h-10 flex-none rounded-full bg-white flex items-center justify-center" aria-label="Schließen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <p class="mt-3 text-muted text-sm leading-relaxed">Wählen Sie aus, welche Kategorien Sie zulassen möchten. Ihre Auswahl können Sie jederzeit ändern.</p>
+    <div class="mt-5 flex flex-col gap-3">
+      <div class="flex items-center justify-between gap-4 bg-white rounded-2xl p-4">
+        <div><p class="font-medium">Notwendig</p><p class="text-sm text-muted">Speichert Ihre Cookie-Auswahl. Immer aktiv.</p></div>
+        <label class="switch"><input type="checkbox" checked disabled aria-label="Notwendige Cookies"><span></span></label>
+      </div>
+      <div class="flex items-center justify-between gap-4 bg-white rounded-2xl p-4">
+        <div><p class="font-medium">Statistik</p><p class="text-sm text-muted">Hilft uns zu verstehen, wie unsere Website genutzt wird.</p></div>
+        <label class="switch"><input id="ckStats" type="checkbox" aria-label="Statistik-Cookies"><span></span></label>
+      </div>
+      <div class="flex items-center justify-between gap-4 bg-white rounded-2xl p-4">
+        <div><p class="font-medium">Externe Medien</p><p class="text-sm text-muted">Erlaubt Inhalte von Drittanbietern wie Kartendiensten.</p></div>
+        <label class="switch"><input id="ckMedia" type="checkbox" aria-label="Externe Medien"><span></span></label>
+      </div>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-3 justify-end">
+      <button id="ckSave" class="btn btn-secondary">Auswahl speichern</button>
+      <button id="ckAllModal" class="btn btn-primary">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COOKIE-BANNER ============ -->
+<div id="cookieBanner" hidden class="fixed z-[1500] left-0 right-0 bottom-0 gutter" style="padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));">
+  <div class="mx-auto max-w-site glass rounded-[1.75rem] p-5 sm:p-6 shadow-2xl shadow-primary/20 flex flex-col md:flex-row md:items-center gap-4">
+    <div class="flex items-start gap-3 flex-1 min-w-0">
+      <span class="w-10 h-10 flex-none rounded-full bg-primary text-bg flex items-center justify-center"><i data-lucide="cookie" class="w-5 h-5"></i></span>
+      <p class="text-sm leading-relaxed text-ink/85">Wir verwenden Cookies, um Ihnen die bestmögliche Nutzung unserer Website zu ermöglichen. Notwendige Cookies sind immer aktiv, alle weiteren nur mit Ihrer Zustimmung. Mehr dazu in unserer <button data-open="datenschutzModal" class="underline">Datenschutzerklärung</button>.</p>
+    </div>
+    <div class="flex flex-wrap gap-2 md:flex-none">
+      <button data-open="cookieModal" class="btn btn-secondary !py-2.5 !px-4 text-sm">Einstellungen</button>
+      <button id="ckNecessary" class="btn btn-secondary !py-2.5 !px-4 text-sm">Nur notwendige</button>
+      <button id="ckAll" class="btn btn-primary !py-2.5 !px-4 text-sm">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div id="toast" hidden class="fixed z-[2500] left-1/2 -translate-x-1/2 top-6 w-[min(92vw,440px)] bg-ink text-bg rounded-2xl p-4 pr-5 shadow-2xl flex items-start gap-3" role="status" aria-live="polite">
+  <span id="toastIcon" class="w-8 h-8 flex-none rounded-full bg-emerald-500 flex items-center justify-center"><i data-lucide="check" class="w-4 h-4"></i></span>
+  <p id="toastText" class="text-sm leading-relaxed"></p>
+</div>
+
+<script>
+(function () {
+  const U = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}${h ? `&h=${h}&fit=crop` : ''}&q=78`;
+  const icons = () => { if (window.lucide) window.lucide.createIcons(); };
+
+  /* ---------- Galerie ---------- */
+  const shots = [
+    ['1530469912745-a215c6b256ea', 'Saftiges Iskender'],
+    ['1544787219-7f47ccb76574', 'Traditioneller Tee'],
+    ['1598110750624-207050c4f28c', 'Frische Desserts'],
+    ['1517248135467-4c7edcad34c4', 'Gemütlicher Gastraum'],
+    ['1576867757603-05b134ebc379', 'Abendessen mit Freunden'],
+    ['1564890369478-c89ca6d9cde9', 'Aromatischer Tee'],
+    ['1414235077428-338989a2e8c0', 'Festliches Abendessen'],
+    ['1514432324607-a09d9b4aefdd', 'Türkischer Kaffee']
+  ];
+  const rail = document.getElementById('rail');
+  rail.innerHTML = shots.map(([id, label], i) => `
+    <figure class="shot frame flex-none w-[72vw] sm:w-[300px] lg:w-[320px] ${i % 2 ? 'mt-10' : ''}">
+      <div class="inner aspect-[3/4]">
+        <img src="${U(id, 700, 930)}" alt="${label}" loading="lazy" class="w-full h-full object-cover">
+        <figcaption class="pill-label absolute bottom-3 left-3 right-3 glass rounded-full py-2.5 text-center text-lg">${label}</figcaption>
+      </div>
+    </figure>`).join('') + '<div class="flex-none w-1" aria-hidden="true"></div>';
+  const step = () => (rail.querySelector('.shot')?.offsetWidth || 300) + 20;
+  document.getElementById('railPrev').addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+  document.getElementById('railNext').addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+
+  /* ---------- Speisekarte ---------- */
+  const cats = [
+    ['all', 'Alle Gerichte'], ['main', 'Hauptgerichte'], ['meze', 'Vorspeisen'], ['dessert', 'Desserts'], ['drinks', 'Getränke']
+  ];
+  const dishes = [
+    { n: 'Adana Kebab', c: 'main', p: 15.9, img: '1558030006-450675393462', t: ['Holzkohlegrill', 'Scharf'], d: 'Handgeschnittenes Lammhackfleisch mit Paprika und Gewürzen, am Spieß über Holzkohle gegrillt. Dazu Bulgur, gegrillte Tomate, Spitzpaprika und Zwiebel-Sumach-Salat.' },
+    { n: 'Iskender Kebab', c: 'main', p: 16.5, img: '1529006557810-274b9b2fc783', t: ['Spezialität des Hauses'], d: 'Dünn geschnittenes Dönerfleisch auf gerösteten Pide-Würfeln, übergossen mit Tomatensauce und heißer Butter, serviert mit cremigem Joghurt.' },
+    { n: 'Lahmacun', c: 'main', p: 7.5, img: '1633321702518-7feccafb94d5', t: ['Aus dem Steinofen'], d: 'Hauchdünner Teigfladen mit würzigem Hackfleisch, Tomaten und Kräutern. Mit frischem Salat, Petersilie und Zitrone zum Einrollen.' },
+    { n: 'Käse-Pide', c: 'main', p: 10.9, img: '1565299624946-b28f40a0ae38', t: ['Vegetarisch', 'Aus dem Steinofen'], d: 'Schiffchenförmiges Fladenbrot aus dem Steinofen, gefüllt mit geschmolzenem Kaşar-Käse und Butter, auf Wunsch mit Ei.' },
+    { n: 'Hummus', c: 'meze', p: 6.5, img: '1606491956689-2ea866880c84', t: ['Vegan'], d: 'Cremiges Kichererbsenpüree mit Tahini, Zitrone und Knoblauch, verfeinert mit Olivenöl und Paprika. Dazu warmes Fladenbrot.' },
+    { n: 'Cacık', c: 'meze', p: 5.5, img: '1505253716362-afaea1d3d1af', t: ['Vegetarisch'], d: 'Erfrischender Joghurt mit Gurke, Knoblauch, Minze und einem Hauch Dill – der Klassiker zu allen Grillgerichten.' },
+    { n: 'Meze-Platte', c: 'meze', p: 13.9, img: '1600335895229-6e75511892c8', t: ['Zum Teilen', 'Vegetarisch'], d: 'Unsere Auswahl kalter Vorspeisen: Hummus, Cacık, Ezme, gefüllte Weinblätter, Auberginensalat und Schafskäse. Ideal für zwei Personen.' },
+    { n: 'Baklava', c: 'dessert', p: 5.9, img: '1598110750624-207050c4f28c', t: ['Hausgemacht'], d: 'Hauchdünne Blätterteigschichten mit Pistazien, gebacken und in Sirup getränkt. Vier Stück, auf Wunsch mit Vanilleeis.' },
+    { n: 'Künefe', c: 'dessert', p: 7.9, img: '1519676867240-f03562e64548', t: ['Warm serviert'], d: 'Knusprige Teigfäden mit schmelzendem Käse, warm aus der Pfanne, mit Sirup und gehackten Pistazien.' },
+    { n: 'Türkischer Tee', c: 'drinks', p: 2.2, img: '1544787219-7f47ccb76574', t: ['Klassiker'], d: 'Frisch aufgebrühter Schwarztee aus der Schwarzmeerregion, serviert im traditionellen Tulpenglas.' },
+    { n: 'Türkischer Mokka', c: 'drinks', p: 3.5, img: '1514432324607-a09d9b4aefdd', t: ['Frisch gebrüht'], d: 'Fein gemahlener Kaffee, im Cezve aufgekocht, mit Lokum serviert. Wahlweise ohne, mit wenig oder mit viel Zucker.' }
+  ];
+  const euro = v => v.toFixed(2).replace('.', ',') + ' €';
+  const tabs = document.getElementById('tabs');
+  const grid = document.getElementById('dishGrid');
+  let active = 'all';
+  try { const s = localStorage.getItem('hh_tab'); if (s && cats.some(c => c[0] === s)) active = s; } catch (e) {}
+
+  function renderTabs() {
+    tabs.innerHTML = cats.map(([k, l]) => `
+      <button role="tab" aria-selected="${k === active}" data-cat="${k}"
+        class="whitespace-nowrap rounded-full px-6 py-3 text-[.98rem] transition ${k === active ? 'bg-primary text-bg shadow-lg shadow-primary/30' : 'bg-card/80 hover:bg-white text-ink'}">${l}</button>`).join('');
+  }
+  function renderGrid() {
+    const list = dishes.filter(d => active === 'all' || d.c === active);
+    grid.innerHTML = list.map(d => {
+      const i = dishes.indexOf(d);
+      return `
+      <button class="dish frame text-left group" data-dish="${i}" aria-label="${d.n}, ${euro(d.p)} – Details anzeigen">
+        <div class="inner aspect-[4/5]">
+          <img src="${U(d.img, 600, 750)}" alt="${d.n}" loading="lazy" class="w-full h-full object-cover">
+          <span class="absolute top-2.5 right-2.5 glass rounded-full px-3 py-1 text-xs sm:text-sm font-semibold tabular-nums">${euro(d.p)}</span>
+          <span class="pill-label absolute bottom-2.5 left-2.5 right-2.5 glass rounded-full py-2 px-2 text-center text-[.95rem] sm:text-lg leading-tight">${d.n}</span>
+        </div>
+      </button>`;
+    }).join('');
+  }
+  tabs.addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if (!b) return;
+    active = b.dataset.cat;
+    try { localStorage.setItem('hh_tab', active); } catch (e) {}
+    renderTabs(); renderGrid();
+  });
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('[data-dish]'); if (!b) return;
+    const d = dishes[+b.dataset.dish];
+    document.getElementById('dishImg').src = U(d.img, 1000, 625);
+    document.getElementById('dishImg').alt = d.n;
+    document.getElementById('dishTitle').textContent = d.n;
+    document.getElementById('dishPrice').textContent = euro(d.p);
+    document.getElementById('dishDesc').textContent = d.d;
+    document.getElementById('dishTags').innerHTML = [cats.find(c => c[0] === d.c)[1], ...d.t].map(t => `<span class="text-xs px-3 py-1 rounded-full bg-card text-ink">${t}</span>`).join('');
+    openModal('dishModal', b);
+  });
+  renderTabs(); renderGrid();
+
+  /* ---------- FAQ ---------- */
+  const faqs = [
+    ['Haben Sie vegetarische Gerichte?', 'Ja, wir bieten eine große Auswahl an vegetarischen Vorspeisen wie Hummus, Cacık und frische Salate sowie warme Gerichte ohne Fleisch, zum Beispiel unsere Käse-Pide. Hummus ist außerdem vegan.'],
+    ['Kann ich Essen zum Mitnehmen bestellen?', 'Selbstverständlich. Alle Gerichte unserer Speisekarte gibt es auch zum Mitnehmen. Rufen Sie uns einfach unter 05971 9605821 an, dann ist Ihre Bestellung in der Regel nach 15 bis 20 Minuten abholbereit.'],
+    ['Muss ich vorab einen Tisch reservieren?', 'Unter der Woche finden Sie meist auch spontan einen Platz. Am Wochenende und für Gruppen ab 6 Personen empfehlen wir eine Reservierung – telefonisch oder bequem über unser Reservierungsformular.'],
+    ['Kann ich mit Karte bezahlen?', 'Ja, bei uns können Sie bar, mit Girocard sowie mit allen gängigen Kreditkarten bezahlen. Kontaktloses Bezahlen per Smartphone ist ebenfalls möglich.'],
+    ['Wie lange hat das Restaurant geöffnet?', 'Wir haben täglich bis 22:30 Uhr für Sie geöffnet – auch an Wochenenden. An Feiertagen können die Zeiten abweichen; rufen Sie uns im Zweifel kurz an.']
+  ];
+  const faqList = document.getElementById('faqList');
+  faqList.innerHTML = faqs.map(([q, a], i) => `
+    <div class="acc-item rounded-[1.5rem] bg-card/70 border border-white/70 ${i === 0 ? 'open' : ''}">
+      <h3>
+        <button class="acc-btn w-full flex items-center justify-between gap-4 text-left px-6 py-5 font-medium text-[1.05rem]" aria-expanded="${i === 0}" aria-controls="faq-${i}" id="faq-q-${i}">
+          ${q}
+          <span class="acc-icon w-9 h-9 flex-none rounded-full bg-white flex items-center justify-center"><i data-lucide="plus" class="w-4 h-4"></i></span>
+        </button>
+      </h3>
+      <div class="acc-body" id="faq-${i}" role="region" aria-labelledby="faq-q-${i}">
+        <div class="overflow-hidden"><p class="px-6 pb-6 -mt-1 text-muted leading-relaxed">${a}</p></div>
+      </div>
+    </div>`).join('');
+  faqList.addEventListener('click', e => {
+    const btn = e.target.closest('.acc-btn'); if (!btn) return;
+    const item = btn.closest('.acc-item');
+    const willOpen = !item.classList.contains('open');
+    faqList.querySelectorAll('.acc-item').forEach(el => { el.classList.remove('open'); el.querySelector('.acc-btn').setAttribute('aria-expanded', 'false'); });
+    if (willOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  });
+
+  /* ---------- Navigation ---------- */
+  const menuBtn = document.getElementById('menuBtn');
+  const panel = document.getElementById('menuPanel');
+  function setMenu(open) {
+    panel.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    menuBtn.innerHTML = `<i data-lucide="${open ? 'x' : 'menu'}" class="w-5 h-5"></i>`;
+    icons();
+  }
+  menuBtn.addEventListener('click', e => { e.stopPropagation(); setMenu(panel.hidden); });
+  panel.addEventListener('click', e => { if (e.target.closest('a, button')) setMenu(false); });
+  document.addEventListener('click', e => { if (!panel.hidden && !panel.contains(e.target)) setMenu(false); });
+
+  /* ---------- Modals ---------- */
+  let lastFocus = null;
+  const openStack = [];
+  function openModal(id, trigger) {
+    const m = document.getElementById(id); if (!m) return;
+    lastFocus = trigger || document.activeElement;
+    m.hidden = false;
+    void m.offsetWidth; // Reflow erzwingen, damit die Einblendung zuverlässig startet
+    m.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    openStack.push(m);
+    setTimeout(() => { const f = m.querySelector('input:not([disabled]), select, textarea, button'); if (f) f.focus({ preventScroll: true }); }, 60);
+  }
+  function closeModal(m, restoreFocus) {
+    m = m || openStack[openStack.length - 1]; if (!m) return;
+    m.classList.remove('show');
+    setTimeout(() => { if (!m.classList.contains('show')) m.hidden = true; }, 250);
+    const i = openStack.indexOf(m); if (i > -1) openStack.splice(i, 1);
+    if (!openStack.length) document.body.style.overflow = '';
+    if (restoreFocus !== false && lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+  window.openModal = openModal;
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-open]');
+    if (o) { e.preventDefault(); openModal(o.dataset.open, o); return; }
+    const c = e.target.closest('[data-close]');
+    if (c) { e.preventDefault(); closeModal(c.closest('.modal')); return; }
+    if (e.target.classList && e.target.classList.contains('modal')) closeModal(e.target);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { if (openStack.length) closeModal(); else if (!panel.hidden) setMenu(false); }
+  });
+
+  /* ---------- Toast ---------- */
+  const toast = document.getElementById('toast');
+  let tt;
+  function showToast(msg, isError) {
+    const ic = document.getElementById('toastIcon');
+    ic.className = 'w-8 h-8 flex-none rounded-full flex items-center justify-center ' + (isError ? 'bg-red-500' : 'bg-emerald-500');
+    ic.innerHTML = `<i data-lucide="${isError ? 'alert-circle' : 'check'}" class="w-4 h-4"></i>`;
+    icons();
+    document.getElementById('toastText').textContent = msg;
+    toast.hidden = false;
+    clearTimeout(tt); tt = setTimeout(() => { toast.hidden = true; }, isError ? 9000 : 7000);
+  }
+
+  /* ---------- Auswahl: Wie möchten Sie reservieren? ---------- */
+  document.getElementById('chooseOnline').addEventListener('click', e => {
+    e.preventDefault();
+    closeModal(document.getElementById('bookingModal'), false);
+    setTimeout(() => {
+      document.getElementById('reservierung').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => document.getElementById('rName').focus({ preventScroll: true }), 700);
+    }, 120);
+  });
+  document.getElementById('copyPhone').addEventListener('click', e => {
+    e.preventDefault();
+    const num = '+49 5971 9605821';
+    const done = () => showToast('Nummer kopiert!');
+    const fallback = () => {
+      const t = document.createElement('textarea');
+      t.value = num; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(t); t.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (err) {}
+      t.remove();
+      showToast(ok ? 'Nummer kopiert!' : 'Kopieren nicht möglich – bitte notieren Sie: ' + num);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(num).then(done, fallback);
+      else fallback();
+    } catch (err) { fallback(); }
+  });
+
+  /* ---------- Reservierungsformular ---------- */
+  // Empfänger der Reservierungsanfragen (Testphase). Versand über formsubmit.co.
+  const BOOKING_EMAIL = 'ttrenn0020@gmail.com';
+  const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/' + BOOKING_EMAIL;
+
+  const form = document.getElementById('reserveForm');
+  const timeSel = document.getElementById('rTime');
+  const dateInput = document.getElementById('rDate');
+  const guestBox = document.getElementById('guestChips');
+  const submitBtn = document.getElementById('reserveSubmit');
+  let guests = '2';
+
+  const pad = n => String(n).padStart(2, '0');
+  const isoOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const deOf = iso => { const [y, m, d] = iso.split('-'); return `${d}.${m}.${y}`; };
+  const today0 = () => { const t = new Date(); t.setHours(0, 0, 0, 0); return t; };
+
+  // Uhrzeiten 11:30–21:30, Vorauswahl 19:00
+  timeSel.innerHTML = Array.from({ length: 21 }, (_, i) => {
+    const m = 11 * 60 + 30 + 30 * i; const v = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+    return `<option value="${v}"${v === '19:00' ? ' selected' : ''}>${v} Uhr</option>`;
+  }).join('');
+
+  // Datum: Heute / Morgen oder Kalender
+  const maxD = today0(); maxD.setDate(maxD.getDate() + 90);
+  dateInput.min = isoOf(today0()); dateInput.max = isoOf(maxD);
+  const quick = [...form.querySelectorAll('.quick-date')];
+  const syncQuick = () => quick.forEach(b => { const d = today0(); d.setDate(d.getDate() + +b.dataset.offset); b.classList.toggle('active', dateInput.value === isoOf(d)); });
+  quick.forEach(b => b.addEventListener('click', () => {
+    const d = today0(); d.setDate(d.getDate() + +b.dataset.offset);
+    dateInput.value = isoOf(d); syncQuick(); setErr('date', '');
+  }));
+  dateInput.addEventListener('change', syncQuick);
+
+  // Personen als Schnellauswahl
+  const guestOpts = ['1', '2', '3', '4', '5', '6', '7+'];
+  function renderGuests() {
+    guestBox.innerHTML = guestOpts.map(g => `<button type="button" role="radio" aria-checked="${g === guests}" data-g="${g}" class="chip" aria-label="${g === '7+' ? '7 oder mehr Personen' : g + (g === '1' ? ' Person' : ' Personen')}">${g}</button>`).join('');
+  }
+  guestBox.addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (!b) return; guests = b.dataset.g; renderGuests(); setErr('guests', ''); });
+  renderGuests();
+
+  function setErr(name, msg) {
+    const el = form.querySelector(`[data-err="${name}"]`); if (el) el.textContent = msg || '';
+    const f = form.elements[name]; if (f && f.classList) f.classList.toggle('invalid', !!msg);
+  }
+  function validate() {
+    const v = Object.fromEntries(new FormData(form));
+    let ok = true; const fail = (k, m) => { setErr(k, m); ok = false; };
+    ['name', 'contact', 'date', 'time', 'guests'].forEach(k => setErr(k, ''));
+    v.name = (v.name || '').trim(); v.contact = (v.contact || '').trim(); v.msg = (v.msg || '').trim();
+    if (v.name.length < 2) fail('name', 'Bitte geben Sie Ihren Namen ein.');
+    const isMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.contact);
+    const isPhone = /^[+\d][\d\s/()-]{5,}$/.test(v.contact);
+    if (!isMail && !isPhone) fail('contact', 'Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse ein, damit wir Sie erreichen.');
+    if (!v.date) fail('date', 'Bitte wählen Sie einen Tag.');
+    else {
+      const [y, m, d] = v.date.split('-').map(Number); const day = new Date(y, m - 1, d);
+      if (day < today0()) fail('date', 'Dieser Tag liegt in der Vergangenheit.');
+      else if (day > maxD) fail('date', 'Reservierungen sind bis zu 90 Tage im Voraus möglich.');
+      else if (day.getTime() === today0().getTime()) {
+        const [h, mi] = v.time.split(':').map(Number); const now = new Date();
+        if (h * 60 + mi <= now.getHours() * 60 + now.getMinutes()) fail('time', 'Diese Uhrzeit ist heute schon vorbei – bitte wählen Sie eine spätere.');
+      }
+    }
+    if (!guests) fail('guests', 'Bitte wählen Sie die Anzahl der Personen.');
+    v.isMail = isMail;
+    return ok ? v : null;
+  }
+
+  // Schutz vor Mehrfach-Anfragen: max. 3 Anfragen pro 24 Stunden und Gerät, mind. 60 Sekunden Abstand.
+  // Hinweis: Das ist ein Schutz im Browser. Wer gezielt Speicher löscht, kann ihn umgehen.
+  const LIMIT_MAX = 3, LIMIT_WINDOW = 24 * 60 * 60 * 1000, LIMIT_GAP = 60 * 1000, LIMIT_KEY = 'hh_bookings';
+  let memoryLog = [];
+  function readLog() {
+    let log = memoryLog; // Fallback, falls der Browser-Speicher blockiert ist
+    try { const s = JSON.parse(localStorage.getItem(LIMIT_KEY) || '[]'); if (Array.isArray(s)) log = s; } catch (e) {}
+    const now = Date.now();
+    return log.filter(t => typeof t === 'number' && now - t < LIMIT_WINDOW).sort((a, b) => a - b);
+  }
+  function addLog() {
+    const log = readLog(); log.push(Date.now()); memoryLog = log;
+    try { localStorage.setItem(LIMIT_KEY, JSON.stringify(log)); } catch (e) {}
+  }
+  function limitMessage() {
+    const log = readLog(); const now = Date.now();
+    if (log.length >= LIMIT_MAX) {
+      const until = new Date(log[0] + LIMIT_WINDOW);
+      return `Sie haben bereits ${LIMIT_MAX} Reservierungsanfragen gesendet. Weitere Anfragen sind ab ${pad(until.getDate())}.${pad(until.getMonth() + 1)}.${until.getFullYear()} um ${pad(until.getHours())}:${pad(until.getMinutes())} Uhr möglich. Für Änderungen rufen Sie uns bitte an: 05971 9605821.`;
+    }
+    if (log.length && now - log[log.length - 1] < LIMIT_GAP) {
+      const s = Math.ceil((LIMIT_GAP - (now - log[log.length - 1])) / 1000);
+      return `Ihre Anfrage ist bereits unterwegs. Bitte warten Sie noch ${s} Sekunden, bevor Sie eine weitere senden.`;
+    }
+    return '';
+  }
+
+  let sending = false;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (sending) return;
+    const v = validate();
+    if (!v) { const f = form.querySelector('.invalid'); if (f) f.focus(); return; }
+    if (v._honey) { form.reset(); return; } // Spam-Bot
+    const blocked = limitMessage();
+    if (blocked) { showToast(blocked, true); return; }
+
+    const guestTxt = guests === '7+' ? '7 oder mehr Personen' : `${guests} ${guests === '1' ? 'Person' : 'Personen'}`;
+    const dateDe = deOf(v.date);
+    const payload = {
+      _subject: `Neue Tischreservierung: ${dateDe}, ${v.time} Uhr, ${guestTxt}`,
+      _template: 'table',
+      _captcha: 'false',
+      Name: v.name,
+      Kontakt: v.contact,
+      Datum: dateDe,
+      Uhrzeit: v.time + ' Uhr',
+      Personen: guestTxt,
+      'Besondere Wünsche': v.msg || '–'
+    };
+    if (v.isMail) payload._replyto = v.contact;
+
+    sending = true;
+    const label = submitBtn.innerHTML;
+    submitBtn.disabled = true; submitBtn.classList.add('opacity-70');
+    submitBtn.textContent = 'Wird gesendet …';
+    const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), 15000);
+    try {
+      const res = await fetch(BOOKING_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || ('HTTP ' + res.status));
+      addLog();
+      showToast(`Vielen Dank, ${v.name.split(' ')[0]}! Ihre Anfrage für ${guestTxt} am ${dateDe} um ${v.time} Uhr ist bei uns eingegangen. Wir melden uns in Kürze zur Bestätigung.`);
+      form.reset(); guests = '2'; renderGuests(); syncQuick(); timeSel.value = '19:00';
+    } catch (err) {
+      console.warn('Reservierung konnte nicht gesendet werden:', err);
+      showToast('Ihre Anfrage konnte gerade nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns an: 05971 9605821.', true);
+    } finally {
+      clearTimeout(to); sending = false;
+      submitBtn.disabled = false; submitBtn.classList.remove('opacity-70');
+      submitBtn.innerHTML = label; icons();
+    }
+  });
+  form.addEventListener('input', e => { if (e.target.classList.contains('invalid')) setErr(e.target.name, ''); });
+  form.addEventListener('change', e => { if (e.target.classList.contains('invalid')) setErr(e.target.name, ''); });
+
+  /* ---------- Cookies ---------- */
+  const banner = document.getElementById('cookieBanner');
+  function readConsent() { try { return JSON.parse(localStorage.getItem('hh_consent') || 'null'); } catch (e) { return null; } }
+  function saveConsent(c, msg) {
+    try { localStorage.setItem('hh_consent', JSON.stringify(Object.assign({ date: new Date().toISOString() }, c))); } catch (e) {}
+    banner.hidden = true;
+    document.getElementById('ckStats').checked = !!c.stats;
+    document.getElementById('ckMedia').checked = !!c.media;
+    if (msg) showToast(msg);
+  }
+  const consent = readConsent();
+  if (consent) { document.getElementById('ckStats').checked = !!consent.stats; document.getElementById('ckMedia').checked = !!consent.media; }
+  else setTimeout(() => { banner.hidden = false; }, 900);
+  document.getElementById('ckAll').addEventListener('click', () => saveConsent({ stats: true, media: true }, 'Ihre Cookie-Einstellungen wurden gespeichert.'));
+  document.getElementById('ckNecessary').addEventListener('click', () => saveConsent({ stats: false, media: false }, 'Es werden nur notwendige Cookies verwendet.'));
+  document.getElementById('ckAllModal').addEventListener('click', () => { saveConsent({ stats: true, media: true }, 'Ihre Cookie-Einstellungen wurden gespeichert.'); closeModal(document.getElementById('cookieModal')); });
+  document.getElementById('ckSave').addEventListener('click', () => {
+    saveConsent({ stats: document.getElementById('ckStats').checked, media: document.getElementById('ckMedia').checked }, 'Ihre Auswahl wurde gespeichert.');
+    closeModal(document.getElementById('cookieModal'));
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  icons();
+})();
+</script>
+</body>
+</html>
